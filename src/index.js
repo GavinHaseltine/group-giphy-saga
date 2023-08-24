@@ -27,6 +27,7 @@ const searchReducer = (state = [], action) => {
 }
 
 function* getSearchData(action) {
+    console.log("in getsearch", action)
     const searchData = yield axios.get('/api/favorite')
     console.log('Basket Data:', searchData)
 

@@ -11,6 +11,7 @@ import createSagaMiddleware from 'redux-saga';
 import axios from 'axios';
 import { takeLatest, put } from 'redux-saga/effects'
 
+
 const sagaMiddleware = createSagaMiddleware();
 
 function* rootSaga() {
@@ -28,10 +29,13 @@ const searchReducer = (state = [], action) => {
 
 function* getSearchData(action) {
     console.log("in getsearch", action)
-    const searchData = yield axios.get('/api/favorite')
+    const apiKey = process.env.GIPHY_API_KEY
+    const searchData = yield axios.get(`http://api.giphy.com/v1/gifs/search?api_key=hNEteyntq0JGyvrnrRP4OTHpl004NOwM&q=${action.payload}`)
     console.log('Basket Data:', searchData)
 
-    yield put({type: 'GET_SEARCH', payload: searchData.data})
+    console.log('hey', searchData.data.data)
+    yield put({type: 'GET_SEARCH', payload: searchData.data.data})
+   
 }
 
 const storeInstance = createStore(

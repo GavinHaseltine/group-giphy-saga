@@ -29,7 +29,7 @@ const searchReducer = (state = [], action) => {
 
 function* getSearchData(action) {
     console.log("in getsearch", action)
-    const apiKey = process.env.GIPHY_API_KEY
+    // const apiKey = process.env.GIPHY_API_KEY
     const searchData = yield axios.get(`http://api.giphy.com/v1/gifs/search?api_key=hNEteyntq0JGyvrnrRP4OTHpl004NOwM&q=${action.payload}`)
     console.log('Basket Data:', searchData)
 

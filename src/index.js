@@ -11,9 +11,28 @@ import createSagaMiddleware from 'redux-saga';
 import axios from 'axios';
 import { takeLatest, put } from 'redux-saga/effects'
 
+const sagaMiddleware = createSagaMiddleware();
+
+function* rootSaga() {
+    //  yield searchResult ('SET_DOMRESULT', mapSearchData)
+}
+
+
+const storeInstance = createStore(
+    combineReducers({
+        // reducer
+    }),
+    // Add sagaMiddleware to our store
+    applyMiddleware(sagaMiddleware, logger),
+);
+
+sagaMiddleware.run(rootSaga);
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
+         <Provider store={storeInstance}>
         <App />
+        </Provider>
     </React.StrictMode>
 );

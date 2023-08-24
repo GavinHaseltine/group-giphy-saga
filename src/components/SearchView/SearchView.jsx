@@ -9,8 +9,10 @@ function SearchView() {
 
     const searchReducer = useSelector(store => store.searchReducer);
 
+    console.log("🔴", searchReducer.map((gif) => gif));
+
     const getGifs = () => {
-        dispatch({ type: 'SET_SEARCH' })
+        dispatch({ type: 'SET_SEARCH', payload: search })
     }
 
     return (
@@ -20,8 +22,11 @@ function SearchView() {
             </header>
             <input value={search} placeholder='SEARCH' onChange={(event) => setSearch(event.target.value)}></input>
             <button onClick={getGifs}>SEARCH</button>
-            <div>{searchReducer}</div>
-        </div>
+            <div>    {searchReducer.map((gif, index) => (<div>
+                <img key={index} src={gif.images.original.url}/>
+                <button>❤️</button> </div>
+            ))} </div>
+        </div> 
     )
 }
 

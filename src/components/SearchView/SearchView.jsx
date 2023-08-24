@@ -15,6 +15,11 @@ function SearchView() {
         dispatch({ type: 'SET_SEARCH', payload: search })
     }
 
+    const likeGif = (gif) => {
+        console.log("clicked on heart")
+        dispatch({type: 'LIKE_GIF', payload: {gif: gif}}
+    )}
+
     return (
         <div>
             <header>
@@ -24,7 +29,7 @@ function SearchView() {
             <button onClick={getGifs}>SEARCH</button>
             <div>    {searchReducer.map((gif, index) => (<div>
                 <img key={index} src={gif.images.original.url}/>
-                <button>❤️</button> </div>
+                <button onClick={() => likeGif(gif.images.original.url)}>❤️</button> </div>
             ))} </div>
         </div> 
     )

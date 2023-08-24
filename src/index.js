@@ -14,13 +14,28 @@ import { takeLatest, put } from 'redux-saga/effects'
 const sagaMiddleware = createSagaMiddleware();
 
 function* rootSaga() {
-    //  yield searchResult ('SET_DOMRESULT', mapSearchData)
+      yield takeLatest('SET_SEARCH', getSearchData)
 }
 
+const searchReducer = (state = [], action) => {
+    switch (action.type) {
+        case 'GET_SEARCH':
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
+function* getSearchData(action) {
+    const searchData = yield axios.get('/api/favorite')
+    console.log('Basket Data:', searchData)
+
+    yield put({type: 'GET_SEARCH', payload: searchData.data})
+}
 
 const storeInstance = createStore(
     combineReducers({
-        // reducer
+        searchReducer
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),

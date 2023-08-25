@@ -16,6 +16,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 function* rootSaga() {
       yield takeLatest('SET_SEARCH', getSearchData)
+      yield takeLatest('LIKE_GIF', postFavoriteGif)
 }
 
 const searchReducer = (state = [], action) => {
@@ -25,6 +26,11 @@ const searchReducer = (state = [], action) => {
         default:
             return state;
     }
+}
+
+function* postFavoriteGif(action){
+    console.log('action.payload', action.payload.gif)
+    yield axios.post('/api/favorite', action.payload.gif)
 }
 
 function* getSearchData(action) {

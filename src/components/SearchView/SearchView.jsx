@@ -17,7 +17,7 @@ function SearchView() {
 
     const likeGif = (gif) => {
         console.log("clicked on heart")
-        dispatch({type: 'LIKE_GIF', payload: {gif: gif}}
+        dispatch({type: 'LIKE_GIF', payload: {gif}}
     )}
 
     return (

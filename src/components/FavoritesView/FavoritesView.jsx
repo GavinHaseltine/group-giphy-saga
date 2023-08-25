@@ -1,6 +1,9 @@
 import axios from 'axios';
 import {useState, useEffect} from 'react'
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+
 
 
 function FavoritesView() {
@@ -32,7 +35,8 @@ function FavoritesView() {
     return (
         <>
             <h1>Favorites View</h1>
-            <button className="fancyBtn" onClick={handleBack}>Search Page</button>
+            <Button  onClick={handleBack} variant="contained">Search Page</Button>
+    
             <ul> 
                 {newFavorite.map(favorite => 
                 //the if codition for the drop box goes here 

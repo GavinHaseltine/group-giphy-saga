@@ -4,9 +4,12 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
 
 function FavoritesView() {
+    const history = useHistory()
 
     const [newFavorite, setNewFavorite] = useState([])
     const [category, setCategory] = useState([])
@@ -38,11 +41,14 @@ function FavoritesView() {
             getCategories()
     }, [])
 
+    const handleBack = () => {
+
+        history.push('/')
+    }
 
     return (
         <>
             <h1>Favorites View</h1>
-
             <ul>
                 {newFavorite.map(favorite =>
 
@@ -66,7 +72,15 @@ function FavoritesView() {
                         <img key={favorite.id} src={favorite.url}>
 
                         </img></li>
-                    //Drop down goes here 
+            <Button  onClick={handleBack} variant="contained">Search Page</Button>
+    
+            <ul> 
+                {newFavorite.map(favorite => 
+                //the if codition for the drop box goes here 
+                <li key={ favorite.id }> 
+                    {favorite.url}
+                </li>
+
                 )}
             </ul>
 

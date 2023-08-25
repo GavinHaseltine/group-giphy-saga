@@ -5,6 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
 
 
 function FavoritesView() {
@@ -12,6 +13,7 @@ function FavoritesView() {
     const [newFavorite, setNewFavorite] = useState([])
     const [category, setCategory] = useState([])
     const [putCategory, setPutCategory] = useState('')
+    const history = useHistory()
 
 
     console.log("category.id", category.id)
@@ -41,9 +43,9 @@ function FavoritesView() {
             });
     }
 
-    const saveCategory = (event) => {
-        // console.log("id", event.id)
-        axios.put(`/api/favorite/:${putCategory}`)
+    const saveCategory = (value, value2) => {
+         console.log("id", value2)
+        axios.put(`/api/favorite/:${event}`)
         .then((response) => {
             // console.log(response)
         })
@@ -61,6 +63,7 @@ function FavoritesView() {
     return (
         <>
             <h1>Favorites View</h1>
+            <Button onClick={handleBack} variant="contained">Search Page</Button>
             <ul>
                 {newFavorite.map((favorite, index) => (
                     <li key={index}>
@@ -73,21 +76,13 @@ function FavoritesView() {
                                     <em>None</em>
                                 </MenuItem>
                                 {category.map((category, index) => (
-                                    <MenuItem key={index} value={category.name}>
+                                    <MenuItem key={index} value={category.id} value2={category.name}>
                                         {category.name}
                                     </MenuItem>
                                 ))}
                             </Select>
                         </FormControl>
                         <img src={favorite.url} alt="favorite"></img>
-                    </li>
-                ))}
-            </ul>
-            <Button onClick={handleBack} variant="contained">Search Page</Button>
-            <ul> 
-                {newFavorite.map((favorite, index) => (
-                    <li key={index}> 
-                        {favorite.url}
                     </li>
                 ))}
             </ul>

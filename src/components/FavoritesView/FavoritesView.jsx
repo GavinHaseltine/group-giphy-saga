@@ -4,16 +4,17 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
 
 function FavoritesView() {
-    const history = useHistory()
 
     const [newFavorite, setNewFavorite] = useState([])
     const [category, setCategory] = useState([])
-    const [putCategory, setPutCategory] = useState([])
+    const [putCategory, setPutCategory] = useState('')
+
+
+    console.log("category.id", category.id)
 
     const getFavorite = () => {
         axios.get('/api/favorite')
@@ -26,6 +27,10 @@ function FavoritesView() {
             })
     }
 
+    const handleBack = () => {
+        history.push('/')
+    }
+
     const getCategories = () => {
         axios.get('/api/category')
             .then((response) => {
@@ -36,57 +41,58 @@ function FavoritesView() {
             });
     }
 
+    const saveCategory = (event) => {
+        // console.log("id", event.id)
+        axios.put(`/api/favorite/:${putCategory}`)
+        .then((response) => {
+            // console.log(response)
+        })
+        .catch((error) => {
+            console.log("Error on PUT", error)
+        })
+    }
+
     useEffect(() => {
         getFavorite(),
-            getCategories()
+        getCategories()
     }, [])
 
-    const handleBack = () => {
-
-        history.push('/')
-    }
 
     return (
         <>
             <h1>Favorites View</h1>
             <ul>
-                {newFavorite.map(favorite =>
-
-                    //the if codition for the drop box goes here 
-
-                    <li>
+                {newFavorite.map((favorite, index) => (
+                    <li key={index}>
                         <FormControl variant="standard" sx={{ m: 1, minWidth: 200 }}>
                             <InputLabel>SELECT CATEGORY</InputLabel>
                             <Select
-                                required
-                                type="number"
-                                onChange={(event) => setPutCategory(event.target.value)}>
-                                <MenuItem value="">
+                                onChange={(event) => saveCategory(event.target.value)}
+                            >
+                                <MenuItem>
                                     <em>None</em>
                                 </MenuItem>
-                                {category.map(category => {
-                                    return <MenuItem value={category.name}>{category.name}</MenuItem>
-                                })}
+                                {category.map((category, index) => (
+                                    <MenuItem key={index} value={category.name}>
+                                        {category.name}
+                                    </MenuItem>
+                                ))}
                             </Select>
                         </FormControl>
-                        <img key={favorite.id} src={favorite.url}>
-
-                        </img></li>
-            <Button  onClick={handleBack} variant="contained">Search Page</Button>
-    
-            <ul> 
-                {newFavorite.map(favorite => 
-                //the if codition for the drop box goes here 
-                <li key={ favorite.id }> 
-                    {favorite.url}
-                </li>
-
-                )}
+                        <img src={favorite.url} alt="favorite"></img>
+                    </li>
+                ))}
             </ul>
-
-
+            <Button onClick={handleBack} variant="contained">Search Page</Button>
+            <ul> 
+                {newFavorite.map((favorite, index) => (
+                    <li key={index}> 
+                        {favorite.url}
+                    </li>
+                ))}
+            </ul>
         </>
     )
-}
+                }
 
 export default FavoritesView

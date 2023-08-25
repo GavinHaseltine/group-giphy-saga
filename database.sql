@@ -18,3 +18,7 @@ CREATE TABLE "favorites" (
 -- Default categories. You may change them :)
 INSERT INTO "category" ("name")
 VALUES ('funny'), ('cohort'), ('cartoon'), ('nsfw'), ('meme');
+
+UPDATE "favorites" 
+SET category_id = 2
+WHERE id =  1;

@@ -1,11 +1,13 @@
 import React from "react"
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
 
 
 function SearchView() {
     const [search, setSearch] = useState('')
     const dispatch = useDispatch();
+    const history = useHistory()
 
     const searchReducer = useSelector(store => store.searchReducer);
 
@@ -20,6 +22,11 @@ function SearchView() {
         dispatch({type: 'LIKE_GIF', payload: {gif}}
     )}
 
+    const handleFavorite = () => {
+
+        history.push('/favoritesview')
+    }
+
     return (
         <div>
             <header>
@@ -31,6 +38,7 @@ function SearchView() {
                 <img key={index} src={gif.images.original.url}/>
                 <button onClick={() => likeGif(gif.images.original.url)}>❤️</button> </div>
             ))} </div>
+            <button className="fancyBtn" onClick={handleFavorite}>Favorites</button>
         </div> 
     )
 }

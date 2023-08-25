@@ -1,8 +1,10 @@
 import axios from 'axios';
 import {useState, useEffect} from 'react'
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
 
 
 function FavoritesView() {
+    const history = useHistory()
 
     const[newFavorite, setNewFavorite] = useState([])
 
@@ -20,12 +22,17 @@ function FavoritesView() {
     useEffect( () => {
         getFavorite();
     }, [])
+
+    const handleBack = () => {
+
+        history.push('/')
+    }
    
 
     return (
         <>
             <h1>Favorites View</h1>
-        
+            <button className="fancyBtn" onClick={handleBack}>Search Page</button>
             <ul> 
                 {newFavorite.map(favorite => 
                 //the if codition for the drop box goes here 

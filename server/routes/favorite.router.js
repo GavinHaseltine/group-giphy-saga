@@ -1,7 +1,10 @@
 const express = require('express');
 const pool = require('../modules/pool');
 
+
+
 const router = express.Router();
+router.use(express.json())
 
 // return all favorite images
 router.get('/', (req, res) => {
@@ -17,15 +20,18 @@ router.get('/', (req, res) => {
 
 // add a new favorite
 router.post('/', (req, res) => {
+  console.log("req.body!!!!", req.body[0])
+  const urlKey = Object.keys(req.body)[0]; 
   const queryText = `INSERT INTO "favorites" ("url")
   VALUES ($1);`
-  const queryParams = [req.body.name]
+  const queryParams = [urlKey]
   pool.query(queryText,queryParams)
       .then((result) => {
         res.sendStatus(201);
       })
       .catch((error) => {
         res.sendStatus(500);
+        console.log("HERE", req.body)
       })
 });
 
